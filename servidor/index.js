@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const app = require("./init");
 const { error404, errorGeneral, generarError } = require("./errors");
 const Usuari = require("../bd/models/Usuari");
+const Item = require("../bd/models/Item");
 
 const authMiddleware = (req, res, next) => {
   if (!req.header("Authorization")) {
@@ -35,14 +36,13 @@ const iniciaServidor = () => {
   app.get("/items/llistat", authMiddleware, async (req, res, next) => {
     const id = req.idUsuari;
     const usuari = await Usuari.findById(id).populate("items");
+    console.log(usuari);
     if (!usuari) {
       const nouError = generarError("L'usuari no existeix", 404);
       return next(nouError);
     }
-    const dades = usuari.items;
-    res.json({
-      dades,
-    });
+    const { items } = usuari;
+    res.json(items);
   });
 
   app.put("/usuaris/login", async (req, res, next) => {
