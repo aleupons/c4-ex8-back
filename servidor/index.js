@@ -51,7 +51,7 @@ const iniciaServidor = () => {
       const nouError = generarError("Falten credencials", 400);
       return next(nouError);
     }
-    const usuariTrobat = await Usuari.findOne({ usuari });
+    const usuariTrobat = await Usuari.findOne({ usuari, contrassenya });
     if (usuariTrobat) {
       const token = jwt.sign({ id: usuariTrobat._id }, process.env.JWT_SECRET, {
         expiresIn: "15d",
