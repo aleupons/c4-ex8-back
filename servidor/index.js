@@ -54,7 +54,7 @@ const iniciaServidor = () => {
     const usuariTrobat = await Usuari.findOne({ usuari });
     if (usuariTrobat.length !== 0) {
       const token = jwt.sign({ id: usuariTrobat._id }, process.env.JWT_SECRET, {
-        expiresIn: "1y",
+        expiresIn: "15d",
       });
       res.json({ token });
     } else {
