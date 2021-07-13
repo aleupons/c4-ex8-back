@@ -17,4 +17,10 @@ const errorGeneral = (err, req, res, next) => {
   res.status(codi).json({ error: true, missatge });
 };
 
-module.exports = { errorServidor, error404, errorGeneral };
+const generarError = (missatge, codi) => {
+  const nouError = new Error(missatge);
+  nouError.codi = codi;
+  return nouError;
+};
+
+module.exports = { errorServidor, error404, errorGeneral, generarError };
